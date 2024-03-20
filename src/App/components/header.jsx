@@ -25,7 +25,7 @@ export default function Header() {
 
 
     const handleCloseUserMenu = (e) => {
-        if (e == "Sair") {
+        if (e === "Sair") {
             LogoutApp()
         }
         setAnchorElUser(null);
@@ -58,7 +58,7 @@ export default function Header() {
 
                     </Box>
                     <div style={{width:50, height:50, borderRadius:'50%', display:"flex", alignItems:'center', justifyContent:'center'}}>
-                    <img style={{height:40, width:'auto'}} src={Logo}/>
+                    <img style={{height:40, width:'auto'}} src={Logo} alt="Img LOGO"/>
                     </div>
 
                     <Typography

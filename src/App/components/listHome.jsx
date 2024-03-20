@@ -16,7 +16,7 @@ export default function ListHome({ datas, onPress }) {
                 <span style={{color:'grey'}}>{datas.destination.address.district} - {datas.destination.address.street} Nº {datas.destination.address.number}</span>
             </div>
            </div>
-                    <Button onClick={() => onPress(datas)} variant={"contained" } color={datas.status == 'ASSUMIDO' ? "primary" : "secondary"} style={{ height: 30, color:'white' }}>
+                    <Button onClick={() => onPress(datas)} variant={"contained" } color={datas.status === 'ASSUMIDO' ? "primary" : "secondary"} style={{ height: 30, color:'white' }}>
                         Abrir
                     </Button>
 

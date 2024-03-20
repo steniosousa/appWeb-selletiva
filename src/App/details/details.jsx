@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import * as React from 'react';
-import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
 import Header from "../components/header";
 import { Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
@@ -84,11 +83,11 @@ export default function DetailsApp() {
         const jsonCurrentImages = JSON.parse(currentImages)
         console.log(jsonCurrentImages)
         if (!jsonCurrentImages) return
-        jsonCurrentImages.map((item) => {
-            if (item.type == "charge") {
+        jsonCurrentImages.forEach((item) => {
+            if (item.type === "charge") {
                 setCharge(item.name)
             }
-            else if (item.type == "descharge") {
+            else if (item.type === "descharge") {
                 setDescharge(item.name)
             }
             else {
@@ -135,13 +134,13 @@ export default function DetailsApp() {
         const jsonCurrentImages = JSON.parse(currentImages)
         if (!jsonCurrentImages) return
         delete jsonCurrentImages[TypeEvidence]
-        const filter = jsonCurrentImages.filter((item) => item.type != TypeEvidence)
+        const filter = jsonCurrentImages.filter((item) => item.type !== TypeEvidence)
         localStorage.setItem(clear.id, JSON.stringify(filter));
 
-        if (TypeEvidence == "charge") {
+        if (TypeEvidence === "charge") {
             setCharge('')
         }
-        else if (TypeEvidence == "descharge") {
+        else if (TypeEvidence === "descharge") {
             setDescharge('')
         }
         else {
@@ -303,7 +302,7 @@ export default function DetailsApp() {
 
                     </div>
                 ) : (
-                    <div onClick={() => handleOpenModal("document")} style={{ display: "flex", flexDirection: 'column', alignItems: 'center', background: '#add8e6', borderRadius: 10, height: 100, width: 90, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div onClick={() => handleOpenModal("document")} style={{ display: "flex", flexDirection: 'column', alignItems: 'center', background: '#add8e6', borderRadius: 10, height: 100, width: 90, justifyContent: 'center' }}>
                         <Avatar >
                             <CameraAltIcon />
                         </Avatar>

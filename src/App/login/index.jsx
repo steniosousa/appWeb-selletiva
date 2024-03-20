@@ -9,7 +9,6 @@ import {
     Card,
     CircularProgress,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import CustomTextField from 'src/components/forms/theme-elements/CustomTextField';
@@ -19,7 +18,6 @@ import AuthContext from 'src/contexto/AuthContext';
 const LoginApp = ({ subtitle }) => {
     const [key, setKey] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const navigate = useNavigate()
     const { LoginApp } = useContext(AuthContext)
 
     async function handleLogin() {
@@ -70,7 +68,7 @@ const LoginApp = ({ subtitle }) => {
                     >
                         <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{marginBottom:40}} />
+                                <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{marginBottom:40}} alt="Img LOGO" />
                             </Box>
                             <>
                                 <Stack>
