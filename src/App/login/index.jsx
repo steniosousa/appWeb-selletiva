@@ -10,7 +10,6 @@ import {
     CircularProgress,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../assets/images/logos/intermedium-login.png'
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import CustomTextField from 'src/components/forms/theme-elements/CustomTextField';
@@ -36,19 +35,19 @@ const LoginApp = ({ subtitle }) => {
                 denyButtonText: 'Cancelar',
                 confirmButtonText: 'Ok'
             })
+            setIsLoading(false)
             return
         }
         LoginApp(key)
         setIsLoading(false)
     }
     return (
-        <PageContainer title="Login" description="this is Login page">
+        <PageContainer title="Login" description="this is Login page" >
             <Box
                 sx={{
                     position: 'relative',
                     '&:before': {
                         content: '""',
-                        background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
                         backgroundSize: '400% 400%',
                         animation: 'gradient 15s ease infinite',
                         position: 'absolute',
@@ -71,11 +70,9 @@ const LoginApp = ({ subtitle }) => {
                     >
                         <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <img src={Logo} height={100} />
+                                <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{marginBottom:40}} />
                             </Box>
                             <>
-
-
                                 <Stack>
                                     <Box>
                                         <Typography variant="subtitle1"
@@ -90,7 +87,7 @@ const LoginApp = ({ subtitle }) => {
                                                 variant="outlined"
                                                 size="small"
                                                 fullWidth
-                                                onClick={() => navigate('/auth/login')}
+                                                onClick={() => window.location.href="https://sistema.selletiva.com.br/auth"}
                                             >
                                                 Acessar plataforma web
                                             </Button>

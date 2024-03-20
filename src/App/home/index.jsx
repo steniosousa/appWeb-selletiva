@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import ListHome from '../components/listHome';
 import { Button, CircularProgress, List } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+
 function HomeApp() {
     const { operator } = useContext(AuthContext)
     const [cleanings, setCleanings] = useState([])
@@ -15,14 +16,19 @@ function HomeApp() {
 
     async function getCleanings() {
         setIsLoading(true)
-        const userId = JSON.parse(operator).id
         if (!operator) {
             setIsLoading(false)
             return
         }
+        const auth_key = operator.auth_key
         try {
-            const { data } = await Api.get('cleaning/recover/app', { params: { userId, page: 1 } })
-            setCleanings(data)
+            const { data } = await Api.get('/', {
+                headers: {
+                  Authorization: auth_key,
+                },
+                params: { onlyPendingDestination: 'true' },
+              });
+             setCleanings(data)
         }
         catch {
             await Swal.fire({

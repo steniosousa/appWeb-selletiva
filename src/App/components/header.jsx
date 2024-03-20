@@ -11,11 +11,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AuthContext from 'src/contexto/AuthContext';
+import Logo from '../../assets/images/logos/removed.png'
 
 
 export default function Header() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const settings = ['Profile', 'Account', 'Dashboard', 'Sair'];
+    const settings = [ 'Sair'];
     const { LogoutApp } = React.useContext(AuthContext)
 
     const handleOpenUserMenu = (event) => {
@@ -50,13 +51,16 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        Intermedium
+                        Selletiva
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
 
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <div style={{width:50, height:50, borderRadius:'50%', display:"flex", alignItems:'center', justifyContent:'center'}}>
+                    <img style={{height:40, width:'auto'}} src={Logo}/>
+                    </div>
+
                     <Typography
                         variant="h5"
                         noWrap
@@ -73,7 +77,7 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        Intermedium
+                        Selletiva
                     </Typography>
 
 
