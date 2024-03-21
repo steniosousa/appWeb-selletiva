@@ -7,6 +7,7 @@ import axios from "axios";
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [operator, setOperator] = useState(null)
+  const [language, setLanguage] = useState(null)
   const navigate = useNavigate();
 
 
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     navigate('/app/login')
   }
   return (
-    <AuthContext.Provider value={{ LoginApp, setOperator, operator, LogoutApp }}>
+    <AuthContext.Provider value={{ LoginApp, setOperator, operator, LogoutApp,setLanguage,language }}>
       {children}
     </AuthContext.Provider>
   );

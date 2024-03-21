@@ -14,12 +14,14 @@ import Swal from 'sweetalert2';
 import CustomTextField from 'src/components/forms/theme-elements/CustomTextField';
 import PageContainer from 'src/components/container/PageContainer';
 import AuthContext from 'src/contexto/AuthContext';
+import { useEffect } from 'react';
+import axios from 'axios';
+import Api from 'src/api/service';
 
 const LoginApp = ({ subtitle }) => {
     const [key, setKey] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const { LoginApp } = useContext(AuthContext)
-
+    const { LoginApp, operator,setLanguage, language } = useContext(AuthContext)
     async function handleLogin() {
         setIsLoading(true)
         if (isLoading) return
@@ -39,6 +41,55 @@ const LoginApp = ({ subtitle }) => {
         LoginApp(key)
         setIsLoading(false)
     }
+
+    async function getLangueg() {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            if (!position) return
+
+
+
+            try {
+                const { data } = await axios.get("http://nominatim.openstreetmap.org/reverse?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&format=json")
+                if (data.address.country === "Chile") {
+                    try {
+                        const { data } = await Api.get('/linguages', {
+                            headers: {
+                                Authorization: "435F57X",
+                            },
+                        });
+                        setLanguage(data["es-cl"][0])
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }else if(data.address.country === "Canadá"){
+                    try {
+                        const { data } = await Api.get('/linguages', {
+                            headers: {
+                                Authorization: "435F57X",
+                            },
+                        });
+                        setLanguage(data["en-us"][0])
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }else{
+                    return
+                }
+
+            } catch (error) {
+                console.log(error);
+
+            }
+
+        });
+    }
+    useEffect(() => {
+        getLangueg()
+    }, [])
+
+    useEffect(() => {
+        console.log(language)
+    }, [language])
     return (
         <PageContainer title="Login" description="this is Login page" >
             <Box
@@ -68,13 +119,13 @@ const LoginApp = ({ subtitle }) => {
                     >
                         <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{marginBottom:40}} alt="Img LOGO" />
+                                <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{ marginBottom: 40 }} alt="Img LOGO" />
                             </Box>
                             <>
                                 <Stack>
                                     <Box>
                                         <Typography variant="subtitle1"
-                                            fontWeight={600} component="label" htmlFor='username' mb="5px">Digite sua chave de acesso</Typography>
+                                            fontWeight={600} component="label" htmlFor='username' mb="5px">{language ? language.CódigoDeAcesso  : "Código de acceso"}</Typography>
                                         <CustomTextField id="username" variant="outlined" fullWidth onChange={(e) => setKey(e.target.value)} />
                                     </Box>
 
@@ -85,7 +136,7 @@ const LoginApp = ({ subtitle }) => {
                                                 variant="outlined"
                                                 size="small"
                                                 fullWidth
-                                                onClick={() => window.location.href="https://sistema.selletiva.com.br/auth"}
+                                                onClick={() => window.location.href = "https://sistema.selletiva.com.br/auth"}
                                             >
                                                 Acessar plataforma web
                                             </Button>
@@ -111,7 +162,7 @@ const LoginApp = ({ subtitle }) => {
                                             fullWidth
                                             onClick={handleLogin}
                                         >
-                                            Acessar
+                                            {language ? language.Acessar  : "Acessar    "}
                                         </Button>
                                     )}
                                 </Box>

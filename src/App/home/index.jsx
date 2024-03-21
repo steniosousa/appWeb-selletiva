@@ -8,7 +8,7 @@ import { Button, CircularProgress, List } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 function HomeApp() {
-    const { operator } = useContext(AuthContext)
+    const { operator, language } = useContext(AuthContext)
     const [cleanings, setCleanings] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
@@ -21,15 +21,15 @@ function HomeApp() {
             return
         }
         const auth_key = operator.auth_key
-        console.log(operator)
+
         try {
             const { data } = await Api.get('/', {
                 headers: {
                     Authorization: auth_key,
                 },
                 params: { onlyPendingDestination: 'true' },
-              });
-             setCleanings(data)
+            });
+            setCleanings(data)
         }
         catch {
             await Swal.fire({
@@ -47,7 +47,7 @@ function HomeApp() {
 
     useEffect(() => {
         if (!operator) return
-      
+
         getCleanings()
     }, [operator])
 
@@ -67,7 +67,7 @@ function HomeApp() {
                             </div>
                         ) : (
                             <>
-                                <span >Nenhuma solicitação vigente no momento</span>
+                                <span >{language ? language.SemSolicitações : "Nnehum solicitação vigente no momento"}</span>
                                 <Button onClick={() => getCleanings()}>Atualizar</Button>
                             </>
 

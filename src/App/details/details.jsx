@@ -28,7 +28,7 @@ export default function DetailsApp() {
     const [charge, setCharge] = React.useState('')
     const [descharge, setDescharge] = React.useState('')
     const [document, setDocument] = React.useState('')
-    const { operator } = React.useContext(AuthContext)
+    const { operator, language } = React.useContext(AuthContext)
     const [isLoading, setIsLoading] = React.useState(false)
     const [Unidade, setUnidade] = useState('')
     const [peso, setPeso] = useState('')
@@ -227,10 +227,10 @@ export default function DetailsApp() {
             <div style={{ margin: 5 }}>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 30 }}>
                     <FormControl sx={{ minWidth: '55%' }}>
-                        <TextField id="outlined-basic" label="Nº Documento" variant="outlined" onChange={(e) => setIdDocument(e.target.value)} />
+                        <TextField id="outlined-basic" label={language ? language.NºDocumento : "Nº Documento"} variant="outlined" onChange={(e) => setIdDocument(e.target.value)} />
                     </FormControl>
                     <FormControl sx={{ minWidth: '40%' }}>
-                        <InputLabel id="demo-simple-select-label">Tipo:</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{language ? language.TipoDeResíduo : "Tipo de documento"}</InputLabel>
                         <Select
                             onChange={(e) => setTipo(e.target.value)}
                             value={tipo}
@@ -245,10 +245,10 @@ export default function DetailsApp() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 5 }}>
                     <FormControl sx={{ minWidth: '55%' }}>
-                        <TextField id="outlined-basic" label="Peso: " variant="outlined" value={peso} onChange={(e) => setPeso(e.target.value)} />
+                        <TextField id="outlined-basic" label={language ? language.QuantidadeDaOperação : "Quantidade da operação"} variant="outlined" value={peso} onChange={(e) => setPeso(e.target.value)} />
                     </FormControl>
                     <FormControl sx={{ minWidth: '40%' }}>
-                        <InputLabel id="demo-simple-select-label">Unidade:</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{language ? language.Unidade : "Unidade:"}</InputLabel>
                         <Select
                             label="Unidade"
                             onChange={(e) => setUnidade(e.target.value)}
@@ -312,7 +312,7 @@ export default function DetailsApp() {
             <Button variant={isLoading ? "outlined" : "contained"} color="primary" style={{ width: '80%', marginLeft: '10%' }} onClick={uploadDatas}>
                 {isLoading ? (<CircularProgress style={{ color: 'white' }} />) : (
                     <span>
-                        Enviar
+                        {language ? language.Enviar : "Enviar"}
                     </span>
                 )}
             </Button>
