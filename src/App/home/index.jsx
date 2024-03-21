@@ -67,7 +67,7 @@ function HomeApp() {
                             </div>
                         ) : (
                             <>
-                                <span >{language ? language.SemSolicitações : "Nnehum solicitação vigente no momento"}</span>
+                                <span >{language ? language.SemSolicitações : "Nenhuma solicitação vigente no momento"}</span>
                                 <Button onClick={() => getCleanings()}>Atualizar</Button>
                             </>
 

@@ -8,6 +8,11 @@ import {
     Grid,
     Card,
     CircularProgress,
+    FormLabel,
+    FormControl,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
 } from '@mui/material';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
@@ -21,11 +26,12 @@ import Api from 'src/api/service';
 const LoginApp = ({ subtitle }) => {
     const [key, setKey] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const { LoginApp, operator,setLanguage, language } = useContext(AuthContext)
+    const { LoginApp, setLanguage, language } = useContext(AuthContext)
+    const [app, setApp] = useState('')
     async function handleLogin() {
         setIsLoading(true)
         if (isLoading) return
-        if (!key) {
+        if (!key || !app) {
             await Swal.fire({
                 icon: 'error',
                 title: "Preencha todos os campos",
@@ -45,9 +51,6 @@ const LoginApp = ({ subtitle }) => {
     async function getLangueg() {
         navigator.geolocation.getCurrentPosition(async (position) => {
             if (!position) return
-
-
-
             try {
                 const { data } = await axios.get("http://nominatim.openstreetmap.org/reverse?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&format=json")
                 if (data.address.country === "Chile") {
@@ -61,7 +64,7 @@ const LoginApp = ({ subtitle }) => {
                     } catch (error) {
                         console.log(error)
                     }
-                }else if(data.address.country === "Canadá"){
+                } else if (data.address.country === "Canadá") {
                     try {
                         const { data } = await Api.get('/linguages', {
                             headers: {
@@ -72,7 +75,7 @@ const LoginApp = ({ subtitle }) => {
                     } catch (error) {
                         console.log(error)
                     }
-                }else{
+                } else {
                     return
                 }
 
@@ -87,9 +90,7 @@ const LoginApp = ({ subtitle }) => {
         getLangueg()
     }, [])
 
-    useEffect(() => {
-        console.log(language)
-    }, [language])
+
     return (
         <PageContainer title="Login" description="this is Login page" >
             <Box
@@ -122,10 +123,22 @@ const LoginApp = ({ subtitle }) => {
                                 <img src={"https://sistema.selletiva.com.br/images/logo.svg"} height={70} style={{ marginBottom: 40 }} alt="Img LOGO" />
                             </Box>
                             <>
+                                <FormControl>
+                                    <RadioGroup
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        defaultValue="female"
+                                        name="radio-buttons-group"
+                                        style={{ display: 'flex', flexDirection: 'row' }}
+                                        onChange={(e) => setApp(e.target.value)}
+                                    >
+                                        <FormControlLabel value="Coleta" control={<Radio />} label="Coleta" />
+                                        <FormControlLabel value="Descarte" control={<Radio />} label="Descarte" />
+                                    </RadioGroup>
+                                </FormControl>
                                 <Stack>
                                     <Box>
                                         <Typography variant="subtitle1"
-                                            fontWeight={600} component="label" htmlFor='username' mb="5px">{language ? language.CódigoDeAcesso  : "Código de acceso"}</Typography>
+                                            fontWeight={600} component="label" htmlFor='username' mb="5px">{language ? language.CódigoDeAcesso : "Código de acceso"}</Typography>
                                         <CustomTextField id="username" variant="outlined" fullWidth onChange={(e) => setKey(e.target.value)} />
                                     </Box>
 
@@ -162,12 +175,13 @@ const LoginApp = ({ subtitle }) => {
                                             fullWidth
                                             onClick={handleLogin}
                                         >
-                                            {language ? language.Acessar  : "Acessar    "}
+                                            {language ? language.Acessar : "Acessar    "}
                                         </Button>
                                     )}
                                 </Box>
                                 {subtitle}
                             </>
+                            <p style={{ color: 'grey', marginTop: 20, opacity: 0.5 }}>Version: 2.0.0</p>
                         </Card>
                     </Grid>
                 </Grid>
