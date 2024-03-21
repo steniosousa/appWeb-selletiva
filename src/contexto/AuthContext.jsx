@@ -1,26 +1,26 @@
 import { createContext, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Api from "src/api/service";
 
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [operator, setOperator] = useState(null)
   const [language, setLanguage] = useState(null)
+  const [app, setApp] = useState(null)
   const navigate = useNavigate();
 
 
   async function LoginApp(key) {
     try {
-      const { data } = await axios.post('https://final-destination-server-dev-faae.4.us-1.fl0.io/check-out/auth', {
+      const { data } = await Api.post('/auth', {
         key,
       })
       setOperator(data.success)
       localStorage.setItem('userApp', JSON.stringify(data.success));
       navigate('/app/home')
     } catch (error) {
-      console.log(error)
       await Swal.fire({
         icon: 'error',
         title: "Hash inválido",
@@ -34,11 +34,11 @@ export const AuthProvider = ({ children }) => {
   }
 
   function LogoutApp() {
-    localStorage.removeItem('userApp');
+    localStorage.clear();
     navigate('/app/login')
   }
   return (
-    <AuthContext.Provider value={{ LoginApp, setOperator, operator, LogoutApp,setLanguage,language }}>
+    <AuthContext.Provider value={{ LoginApp, setOperator, operator, LogoutApp, setLanguage, language, setApp, app }}>
       {children}
     </AuthContext.Provider>
   );

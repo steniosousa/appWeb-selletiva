@@ -8,7 +8,6 @@ import {
     Grid,
     Card,
     CircularProgress,
-    FormLabel,
     FormControl,
     RadioGroup,
     FormControlLabel,
@@ -26,12 +25,14 @@ import Api from 'src/api/service';
 const LoginApp = ({ subtitle }) => {
     const [key, setKey] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const { LoginApp, setLanguage, language } = useContext(AuthContext)
-    const [app, setApp] = useState('')
+    const { LoginApp, setLanguage, language, setApp } = useContext(AuthContext)
+    const [choseApp, setChoseApp] = useState('')
+
+
     async function handleLogin() {
         setIsLoading(true)
         if (isLoading) return
-        if (!key || !app) {
+        if (!key || !choseApp) {
             await Swal.fire({
                 icon: 'error',
                 title: "Preencha todos os campos",
@@ -44,6 +45,8 @@ const LoginApp = ({ subtitle }) => {
             setIsLoading(false)
             return
         }
+        console.log(choseApp)
+        setApp(choseApp)
         LoginApp(key)
         setIsLoading(false)
     }
@@ -129,7 +132,7 @@ const LoginApp = ({ subtitle }) => {
                                         defaultValue="female"
                                         name="radio-buttons-group"
                                         style={{ display: 'flex', flexDirection: 'row' }}
-                                        onChange={(e) => setApp(e.target.value)}
+                                        onChange={(e) => setChoseApp(e.target.value)}
                                     >
                                         <FormControlLabel value="Coleta" control={<Radio />} label="Coleta" />
                                         <FormControlLabel value="Descarte" control={<Radio />} label="Descarte" />
