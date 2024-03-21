@@ -111,7 +111,7 @@ export default function DetailsApp() {
         try {
             const { data } = await Api.get('/getTiposDocs', {
                 headers: {
-                    Authorization: auth_key,
+                    authorization: auth_key,
                 },
             });
             setTypeDocs(data)
@@ -187,7 +187,7 @@ export default function DetailsApp() {
         try {
             await Api.post('/', objctSend, {
                 headers: {
-                    Authorization: auth_key,
+                    authorization: auth_key,
                 },
             });
             await Swal.fire({

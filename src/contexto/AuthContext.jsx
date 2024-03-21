@@ -12,26 +12,11 @@ export const AuthProvider = ({ children }) => {
 
   async function LoginApp(key) {
     try {
-      let headersList = {
-        "Accept": "*/*",
-        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-        "Content-Type": "application/json"
-      }
-
-      let bodyContent = JSON.stringify({
-        "key": key
-      });
-
-      let reqOptions = {
-        url: "http://sistema.selletiva.com.br/serverapp/auth",
-        method: "POST",
-        headers: headersList,
-        data: bodyContent,
-      }
-
-      let { data } = await axios.request(reqOptions);
-      setOperator(data)
-      localStorage.setItem('userApp', JSON.stringify(data));
+      const { data } = await axios.post('https://final-destination-server-dev-faae.4.us-1.fl0.io/check-out/auth', {
+        key,
+      })
+      setOperator(data.success)
+      localStorage.setItem('userApp', JSON.stringify(data.success));
       navigate('/app/home')
     } catch (error) {
       console.log(error)

@@ -21,10 +21,11 @@ function HomeApp() {
             return
         }
         const auth_key = operator.auth_key
+        console.log(operator)
         try {
             const { data } = await Api.get('/', {
                 headers: {
-                  Authorization: auth_key,
+                    Authorization: auth_key,
                 },
                 params: { onlyPendingDestination: 'true' },
               });

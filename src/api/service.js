@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Api = axios.create({
-  baseURL:'http://46.101.102.239:3000/check-out'
+  baseURL:'https://final-destination-server-dev-faae.4.us-1.fl0.io/check-out'
   // baseURL: 'http://localhost:8080/'
 
 });
